@@ -1,8 +1,8 @@
 name: Commit check
-run-name:  ${{ github.actor }} check commit
+
 on: [push, workflow_call]
 jobs:
-  Testing-Commit-Message:
+  Validation-commit:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
