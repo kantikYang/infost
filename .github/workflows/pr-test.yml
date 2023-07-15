@@ -24,6 +24,8 @@ jobs:
         run: npm run lint
       - name: Unit test
         run: npm run test-ci
+      - name: instal playwright
+        run: npx playwright install --with-deps
       - name: e2e test
         uses: coactions/setup-xvfb@v1
         with:
