@@ -29,5 +29,5 @@ jobs:
       - name: e2e test
         uses: coactions/setup-xvfb@v1
         with:
-          run: npm run e2e-ci
+          run: npm playwright test --project=chromium
       
