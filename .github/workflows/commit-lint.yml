@@ -1,5 +1,7 @@
 name: Commit check
 
+run-name: Commitlint
+
 on: [push, workflow_call]
 jobs:
   Validation-commit:
