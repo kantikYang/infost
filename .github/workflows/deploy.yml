@@ -1,0 +1,34 @@
+name: Deploy
+
+run-name: Deploy
+
+on: workflow_dispatch
+
+jobs:
+  Deploy-proj:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Setup Node JS
+        uses: actions/setup-node@v3
+        with:
+          node-version: v16.19.0
+          cache: npm
+      - name: npm install
+        run: npm ci
+      - name: npm run build
+        - name: Get latest tag
+          run: |
+            latest_tag=$(git describe --abbrev=0 --tags)
+            echo "TAG=$latest_tag" >> $GITHUB_ENV
+
+      - name: Deploy to GitHub Pages
+        uses: crazy-max/ghaction-github-pages@v3
+        with:
+          target_branch: ${{ env.TAG }}
+          build_dir: build
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
