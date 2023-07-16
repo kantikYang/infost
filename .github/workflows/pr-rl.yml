@@ -14,8 +14,32 @@ jobs:
   Testing:
     uses: ./.github/workflows/pr-test.yml
 
-  build:
+  create_branch:
     needs: [Testing]
+    runs-on: ubuntu-latest
+    # steps:
+    #   - name: Checkout repository
+    #     uses: actions/checkout@v3
+    #     with:
+    #       token: ${{ secrets.GH_ACTIONS }}
+    #   - name: Create branch
+    #     run: |
+    #       BRANCH_NAME=release-${{ github.ref_name }}
+    #       git checkout -b $BRANCH_NAME
+    #       git push -u origin $BRANCH_NAME
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GH_ACTIONS }}
+
+      - name: Create release branch
+        run: |
+          BRANCH_NAME=release-${{ github.ref_name }}
+          git checkout -b $BRANCH_NAME
+          git push -u origin $BRANCH_NAME
+
+    issue:
+    needs: [create_branch]
     name: Create Release
     runs-on: ubuntu-latest
     steps:
@@ -27,17 +51,3 @@ jobs:
           assignees: ${{github.actor}}
           labels: worflow-failed
           body: Workflow failed for commit ${{github.sha}}
-
-  create_branch:
-    needs: [Testing]
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-        with:
-          token: ${{ secrets.GH_ACTIONS }}
-      - name: Create branch
-        run: |
-          BRANCH_NAME=release-${{ github.ref_name }}
-          git checkout -b $BRANCH_NAME
-          git push -u origin $BRANCH_NAME
