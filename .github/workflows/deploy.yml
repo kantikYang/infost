@@ -11,15 +11,12 @@ jobs:
       contents: write
     runs-on: ubuntu-latest
     steps:
-
       - uses: actions/checkout@v3
-
       - name: Get latest tag
         run: |
           latest_tag=$(basename ${{ github.ref_name }})
           echo "TAG=$latest_tag" >> $GITHUB_ENV
           echo "Tag: $latest_tag"
-
       - name: Build
         run: npm ci && npm run build
       - name: Deploy
