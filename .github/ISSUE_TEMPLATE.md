@@ -7,7 +7,7 @@ labels: release
 
 Дата релиза {{ env.DATE }}
 
-Версия: {{ VERSION }}
+Версия: {{ env.VERSION }}
 
 Changelog:
 
