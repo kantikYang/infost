@@ -2,12 +2,15 @@ name: Commit check
 
 run-name: Commitlint
 
-on: 
-  push: 
+# on: [push , workflow_call]
+
+on:
+  push:
+    tags-ignore:
+      - 'v*'
   workflow_call:
-  tags-ignore:
-    - 'v[0-9]+'
-    
+
+
 jobs:
   Validation-commit:
     runs-on: ubuntu-latest
