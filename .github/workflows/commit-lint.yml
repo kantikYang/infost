@@ -10,7 +10,6 @@ on: [push]
 #       - 'v[0-9]+'
 #   workflow_call:
 
-
 jobs:
   Validation-commit:
     runs-on: ubuntu-latest
