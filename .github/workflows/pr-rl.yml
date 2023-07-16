@@ -68,7 +68,7 @@ jobs:
 
       #       ${{ steps.changelog.outputs.changelog }}
 
-      - name: Create an issue
+      - name: Create Issue Action
         uses: JasonEtco/create-an-issue@v2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
