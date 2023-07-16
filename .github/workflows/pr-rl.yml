@@ -17,26 +17,27 @@ jobs:
   create_branch:
     needs: [Testing]
     runs-on: ubuntu-latest
+    # steps:
+    #   - name: Checkout repository
+    #     uses: actions/checkout@v3
+    #     with:
+    #       token: ${{ secrets.GH_ACTIONS }}
+    #   - name: Create branch
+    #     run: |
+    #       BRANCH_NAME=release-${{ github.ref_name }}
+    #       git checkout -b $BRANCH_NAME
+    #       git push -u origin $BRANCH_NAME --tags
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
         with:
           token: ${{ secrets.GH_ACTIONS }}
+
       - name: Create branch
         run: |
           BRANCH_NAME=release-${{ github.ref_name }}
           git checkout -b $BRANCH_NAME
-          git push -u origin $BRANCH_NAME --tags
-    # steps:
-    #   - uses: actions/checkout@v3
-    #     with:
-    #       token: ${{ secrets.GH_ACTIONS }}
-
-    #   - name: Create release branch
-    #     run: |
-    #       BRANCH_NAME=release-${{ github.ref_name }}
-    #       git checkout -b $BRANCH_NAME
-    #       git push -u origin $BRANCH_NAME
+          git push -u origin $BRANCH_NAME
 
   issue-rel:
     needs: [create_branch]
