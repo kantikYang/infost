@@ -9,6 +9,8 @@ labels: release
 
 Версия: {{ env.VERSION }}
 
+Тесты: {{ env.TEST_RESULTS }}
+
 Changelog:
 
 {{ env.CHANGELOG }}

@@ -76,6 +76,7 @@ jobs:
           DATE: ${{ github.event.head_commit.timestamp }}
           VERSION: ${{ github.ref_name }}
           CHANGELOG: ${{ steps.changelog.outputs.changelog }}
+          TEST_RESULTS: ${{ steps.testing.outputs.test-results }}
         with:
           update_existing: true
           search_existing: all
