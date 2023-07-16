@@ -19,7 +19,6 @@ jobs:
         run: npm ci
       - name: build
         run: npm run build
-
       - name: Get latest tag
         run: |
           latest_tag=$(git describe --abbrev=0 --tags)
