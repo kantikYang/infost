@@ -20,10 +20,10 @@ jobs:
       - name: npm install
         run: npm ci
       - name: npm run build
-        - name: Get latest tag
-          run: |
-            latest_tag=$(git describe --abbrev=0 --tags)
-            echo "TAG=$latest_tag" >> $GITHUB_ENV
+      - name: Get latest tag
+        run: |
+          latest_tag=$(git describe --abbrev=0 --tags)
+          echo "TAG=$latest_tag" >> $GITHUB_ENV
 
       - name: Deploy to GitHub Pages
         uses: crazy-max/ghaction-github-pages@v3
