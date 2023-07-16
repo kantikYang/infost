@@ -38,16 +38,16 @@ jobs:
           git checkout -b $BRANCH_NAME
           git push -u origin $BRANCH_NAME
 
-    issue:
-      needs: [create_branch]
-      name: Create Release
-      runs-on: ubuntu-latest
-      steps:
-        - uses: nashmaniac/create-issue-action@v1.2
-          name: Create Issue Action
-          with:
-            title: Build Failed
-            token: ${{secrets.GITHUB_TOKEN}}
-            assignees: ${{github.actor}}
-            labels: worflow-failed
-            body: Workflow failed for commit ${{github.sha}}
+  issue-rel:
+    needs: [create_branch]
+    name: Create Release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: nashmaniac/create-issue-action@v1.2
+        name: Create Issue Action
+        with:
+          title: Build Failed
+          token: ${{secrets.GITHUB_TOKEN}}
+          assignees: ${{github.actor}}
+          labels: worflow-failed
+          body: Workflow failed for commit ${{github.sha}}
