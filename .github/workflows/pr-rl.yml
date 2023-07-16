@@ -33,6 +33,9 @@ jobs:
     permissions: write-all
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
 
       # - name: Build Changelog
       #   id: github_release
@@ -44,7 +47,7 @@ jobs:
         shell: bash
         id: previous-tag
         run: echo "::set-output name=previous-tag::$(git describe --abbrev=0 --tags $(git rev-list --tags --skip=1 --max-count=1))"
-        
+
       - name: Build Changelog
         uses: nielstenboom/semantic-changelog-generator@v1.2.0
         id: changelog
