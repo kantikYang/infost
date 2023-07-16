@@ -4,6 +4,9 @@ run-name: Deploy
 
 on: workflow_dispatch
 
+env:
+  LINK: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/  
+
 jobs:
   Deploy-proj:
     permissions: 
@@ -30,7 +33,7 @@ jobs:
       - name: update
         run: |
           gh issue comment ${{ github.event.issue.number }} --edit-last \
-            --body ":rocket: [Приложение развернуто тут](https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/  )"
+            --body ":rocket: [Приложение развернуто тут]($LINK)"
           gh issue close ${{ github.event.issue.number }
       - uses: lee-dohm/close-matching-issues@v2
         with:
