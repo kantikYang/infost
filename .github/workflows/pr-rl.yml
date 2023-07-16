@@ -33,6 +33,13 @@ jobs:
     name: Create Release
     runs-on: ubuntu-latest
     steps:
+
+      - name: Build Changelog
+        id: github_release
+        uses: mikepenz/release-changelog-builder-action@v3
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - uses: nashmaniac/create-issue-action@v1.2
         name: Create Issue Action
         with:
@@ -42,5 +49,11 @@ jobs:
           labels: New version
           body: |
             Автор релиза: ${{github.actor}}
+
             Дата релиза: ${{ github.event.head_commit.timestamp }}
+
             Версия: ${{ github.ref_name }}
+            -----------------------------------------------------------
+            Changelog:
+
+            ${{steps.github_release.outputs.changelog}}
