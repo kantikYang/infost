@@ -37,12 +37,6 @@ jobs:
         with:
           fetch-depth: 0
 
-      # - name: Build Changelog
-      #   id: github_release
-      #   uses: mikepenz/release-changelog-builder-action@v3
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
       - name: Get preTag
         shell: bash
         id: previous-tag
