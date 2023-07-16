@@ -30,6 +30,7 @@ jobs:
   issue-rel:
     needs: [create_branch]
     name: Create Release
+    permissions: write-all
     runs-on: ubuntu-latest
     steps:
 
@@ -43,6 +44,7 @@ jobs:
         shell: bash
         id: previous-tag
         run: echo "::set-output name=previous-tag::$(git describe --abbrev=0 --tags $(git rev-list --tags --skip=1 --max-count=1))"
+        
       - name: Build Changelog
         uses: nielstenboom/semantic-changelog-generator@v1.2.0
         id: changelog
@@ -50,8 +52,8 @@ jobs:
           base: ${{ steps.previous-tag.outputs.previous-tag }}
           head: ${{ github.ref_name }}
 
-      - uses: nashmaniac/create-issue-action@v1.2
-        name: Create Issue Action
+      - name: Create Issue Action
+        uses: nashmaniac/create-issue-action@v1.2
         with:
           title: Release ${{ github.ref_name }}
           token: ${{secrets.GITHUB_TOKEN}}
