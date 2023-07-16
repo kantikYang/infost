@@ -6,28 +6,32 @@ on: workflow_dispatch
 
 jobs:
   Deploy-proj:
+    permissions: 
+      issues: write
+      contents: write
     runs-on: ubuntu-latest
+
     steps:   
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Setup Node JS
-        uses: actions/setup-node@v3
-        with:
-          node-version: v16.19.0
-          cache: npm
       - name: npm install
         run: npm ci
       - name: build
         run: npm run build
-      - name: Get latest tag
+      - name: Get current branch name
         run: |
-          latest_tag=$(git describe --abbrev=0 --tags)
-          echo "TAG=$latest_tag" >> $GITHUB_ENV 
+          branch_name=$(basename ${{ github.ref }})
+           echo "branch=$branch_name" >> $GITHUB_ENV 
 
       - name: Deploy to GitHub Pages
         uses: crazy-max/ghaction-github-pages@v3
         with:
-          target_branch: ${{ env.TAG }}
+          target_branch: ${{ env.branch }}
           build_dir: build
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # - name: Get latest tag
+      #   run: |
+      #     latest_tag=$(git describe --abbrev=0 --tags)
+      #     echo "TAG=$latest_tag" >> $GITHUB_ENV 
