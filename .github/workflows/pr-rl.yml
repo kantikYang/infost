@@ -1,0 +1,50 @@
+name: Create release
+
+on:
+  push:
+    tags:
+      - 'v[0-9]+'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  issues: write
+
+jobs:
+  Testing:
+    uses: ./.github/workflows/pr-test.yml
+
+  build:
+    needs: [Testing]
+    name: Create Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          body: |
+            Changes in this Release
+            - First Change
+            - Second Change
+          draft: false
+          prerelease: false
+
+  create_branch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      
+      - name: Create branch
+        run: |
+          tag_name=${{ github.ref }}
+          branch_name=${tag_name/refs\/tags\//}
+          git checkout -b $branch_name $tag_name
+          git push origin $branch_name
