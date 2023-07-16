@@ -34,11 +34,22 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
+      # - name: Build Changelog
+      #   id: github_release
+      #   uses: mikepenz/release-changelog-builder-action@v3
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Get preTag
+        shell: bash
+        id: previous-tag
+        run: echo "::set-output name=previous-tag::$(git describe --abbrev=0 --tags $(git rev-list --tags --skip=1 --max-count=1))"
       - name: Build Changelog
-        id: github_release
-        uses: mikepenz/release-changelog-builder-action@v3
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: nielstenboom/semantic-changelog-generator@v1.2.0
+        id: changelog
+        with:
+          base: ${{ steps.previous-tag.outputs.previous-tag }}
+          head: ${{ github.ref_name }}
 
       - uses: nashmaniac/create-issue-action@v1.2
         name: Create Issue Action
@@ -56,4 +67,4 @@ jobs:
             -----------------------------------------------------------
             Changelog:
 
-            ${{steps.github_release.outputs.changelog}}
+            ${{ steps.changelog.outputs.changelog }}
