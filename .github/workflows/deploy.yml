@@ -21,8 +21,8 @@ jobs:
       - name: Get current branch name
         run: |
           branch_name=$(basename ${{ github.ref }})
-           echo "branch=$branch_name" >> $GITHUB_ENV 
-
+          echo "branch=$branch_name" >> $GITHUB_ENV 
+          echo "Current branch name: $branch_name"
       - name: Deploy to GitHub Pages
         uses: crazy-max/ghaction-github-pages@v3
         with:
