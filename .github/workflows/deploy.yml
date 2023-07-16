@@ -19,7 +19,8 @@ jobs:
           cache: npm
       - name: npm install
         run: npm ci
-      - name: npm run build
+      - name: build
+        run: npm run build
       - name: Get latest tag
         run: |
           latest_tag=$(git describe --abbrev=0 --tags)
