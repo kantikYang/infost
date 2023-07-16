@@ -23,10 +23,11 @@ jobs:
           branch_name=$(basename ${{ github.ref }})
           echo "branch=$branch_name" >> $GITHUB_ENV 
           echo "Current branch name: $branch_name"
+
       - name: Deploy to GitHub Pages
         uses: crazy-max/ghaction-github-pages@v3
         with:
-          target_branch: ${{ env.branch }}
+          target_branch: gh-pages
           build_dir: ./build
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
