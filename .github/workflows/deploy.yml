@@ -33,13 +33,13 @@ jobs:
       - name: update
         run: |
           gh issue comment ${{ github.event.issue.number }} --edit-last \
-            --body ":rocket: [Приложение развернуто тут]($LINK)"
-          gh issue close ${{ github.event.issue.number }
+            --body ":rocket: [Приложение тут]($LINK)"
+          gh issue close ${{ github.event.issue.number }}
       - uses: lee-dohm/close-matching-issues@v2
         with:
           query: ${{ env.TAG }}
           token: ${{ secrets.GITHUB_TOKEN }}
-          
+
     # steps:   
     #   - name: Checkout
     #     uses: actions/checkout@v3
