@@ -19,32 +19,26 @@ jobs:
     name: Create Release
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
+      - uses: nashmaniac/create-issue-action@v1.2
+        name: Create Issue Action
         with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
-          body: |
-            Changes in this Release
-            - First Change
-            - Second Change
-          draft: false
-          prerelease: false
+          title: Build Failed
+          token: ${{secrets.GITHUB_TOKEN}}
+          assignees: ${{github.actor}}
+          labels: worflow-failed
+          body: Workflow failed for commit ${{github.sha}}
 
   create_branch:
+    needs: [Testing]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-      
+        with:
+          token: ${{ secrets.GH_ACTIONS }}
+
       - name: Create branch
         run: |
-          tag_name=${{ github.ref }}
-          branch_name=${tag_name/refs\/tags\//}
-          git checkout -b $branch_name $tag_name
-          git push origin $branch_name
+          BRANCH_NAME=release-${{ github.ref_name }}
+          git checkout -b $BRANCH_NAME
+          git push -u origin $BRANCH_NAME
