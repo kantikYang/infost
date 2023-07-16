@@ -11,11 +11,11 @@ permissions:
   issues: write
 
 jobs:
-  # Testing:
-  #   uses: ./.github/workflows/pr-test.yml
+  Testing:
+    uses: ./.github/workflows/pr-test.yml
 
   create_branch:
-    # needs: [Testing]
+    needs: [Testing]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
