@@ -16,8 +16,9 @@ jobs:
 
       - name: Get latest tag
         run: |
-          latest_tag=$(git describe --abbrev=0 --tags)
-          echo "TAG=$latest_tag" >> $GITHUB_ENV 
+          latest_tag=$(basename ${{ github.ref }})
+          echo "TAG=$latest_tag" >> $GITHUB_ENV
+          echo "Tag: $branch_name"
 
       - name: Build
         run: npm ci && npm run build
