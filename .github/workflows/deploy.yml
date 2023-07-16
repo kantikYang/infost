@@ -7,15 +7,9 @@ on: workflow_dispatch
 jobs:
   Deploy-proj:
     runs-on: ubuntu-latest
-    steps:
-      - name: Get latest tag
-        run: |
-          latest_tag=$(git describe --abbrev=0 --tags)
-          echo "TAG=$latest_tag" >> $GITHUB_ENV    
+    steps:   
       - name: Checkout
         uses: actions/checkout@v3
-        with:
-          ref: ${{ env.TAG }}
       - name: Setup Node JS
         uses: actions/setup-node@v3
         with:
@@ -25,6 +19,11 @@ jobs:
         run: npm ci
       - name: build
         run: npm run build
+
+      - name: Get latest tag
+        run: |
+          latest_tag=$(git describe --abbrev=0 --tags)
+          echo "TAG=$latest_tag" >> $GITHUB_ENV 
 
       - name: Deploy to GitHub Pages
         uses: crazy-max/ghaction-github-pages@v3
