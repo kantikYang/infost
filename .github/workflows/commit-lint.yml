@@ -2,7 +2,7 @@ name: Commit check
 
 run-name: Commitlint
 
-on: [push]
+on: [workflow_dispatch]
 
 # on:
 #   push:
