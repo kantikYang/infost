@@ -62,7 +62,7 @@ jobs:
             Дата релиза: ${{ github.event.head_commit.timestamp }}
 
             Версия: ${{ github.ref_name }}
-            -----------------------------------------------------------
+            
             Changelog:
 
             ${{ steps.changelog.outputs.changelog }}
