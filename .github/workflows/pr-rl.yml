@@ -49,24 +49,33 @@ jobs:
           base: ${{ steps.previous-tag.outputs.previous-tag }}
           head: ${{ github.ref_name }}
 
-      - name: Create Issue Action
-        id: create-issue
-        uses: nashmaniac/create-issue-action@v1.2
-        with:
-          title: Release ${{ github.ref_name }}
-          token: ${{secrets.GITHUB_TOKEN}}
-          assignees: ${{github.actor}}
-          labels: New version
-          body: |
-            Автор релиза: ${{github.actor}}
+      # - name: Create Issue Action
+      #   id: create-issue
+      #   uses: nashmaniac/create-issue-action@v1.2
+      #   with:
+      #     title: Release ${{ github.ref_name }}
+      #     token: ${{secrets.GITHUB_TOKEN}}
+      #     assignees: ${{github.actor}}
+      #     labels: New version
+      #     body: |
+      #       Автор релиза: ${{github.actor}}
 
-            Дата релиза: ${{ github.event.head_commit.timestamp }}
+      #       Дата релиза: ${{ github.event.head_commit.timestamp }}
 
-            Версия: ${{ github.ref_name }}
+      #       Версия: ${{ github.ref_name }}
             
-            Changelog:
+      #       Changelog:
 
-            ${{ steps.changelog.outputs.changelog }}
+      #       ${{ steps.changelog.outputs.changelog }}
+
+      - name: Create an issue
+        uses: JasonEtco/create-an-issue@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          AUTHOR: ${{github.actor}}
+          DATE: ${{ github.event.head_commit.timestamp }}
+          VERSION: ${{ github.ref_name }}
+          CHANGELOG: ${{ steps.changelog.outputs.changelog }}
         with:
           update_existing: true
           search_existing: all
