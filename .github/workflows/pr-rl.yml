@@ -50,6 +50,7 @@ jobs:
           head: ${{ github.ref_name }}
 
       - name: Create Issue Action
+        id: create-issue
         uses: nashmaniac/create-issue-action@v1.2
         with:
           title: Release ${{ github.ref_name }}
@@ -66,3 +67,6 @@ jobs:
             Changelog:
 
             ${{ steps.changelog.outputs.changelog }}
+          with:
+            update_existing: true
+            search_existing: all
